@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Quiz UI - Drag and Drop</title>
+    <!-- Підключення бібліотек -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-start: #3b82f6;
+            --accent-end: #8b5cf6;
+            --success-color: #10b981; /* Неоновий зелений для Drag & Drop */
+            --text-primary: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
+            min-height: 100vh;
+            box-sizing: border-box;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(59, 130, 246, 0.15) 0px, transparent 40%),
+                radial-gradient(at 90% 90%, rgba(139, 92, 246, 0.15) 0px, transparent 40%);
+        }
+
+        #info {
+            width: 100%;
+            max-width: 580px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+        }
+
+        #cat-name {
+            color: var(--accent-start);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #score {
+            color: var(--success-color);
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+            font-size: 1.4rem;
+        }
+
+        #current-task-container {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            max-width: 580px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #current-task-container p {
+            color: var(--text-muted);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .drag-item {
+            width: 120px;
+            height: 120px;
+            cursor: grab;
+            border: 3px solid var(--success-color);
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+            z-index: 1000;
+            object-fit: cover;
+            background-color: var(--card-bg);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .drag-item:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+        }
+
+        #game-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 100px);
+            gap: 15px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .drop-zone {
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px dashed var(--card-border);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .drop-zone img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .drop-zone:hover img {
+            opacity: 1;
+        }
+
+        /* Стиль для підсвітки зони при наведенні об'єкта перетягування */
+        .ui-state-hover {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.2);
+            box-shadow: inset 0 0 15px rgba(16, 185, 129, 0.5);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .btn {
+            margin-top: 35px;
+            background: linear-gradient(45deg, var(--accent-start), var(--accent-end));
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="info">
+        <div>Category: <span id="cat-name">...</span></div>
+        <div>Score: <span id="score">0</span></div>
+    </div>
+
+    <div id="current-task-container">
+        <p>Drag this image to the matching photo in the grid below:</p>
+        <img id="main-task" class="drag-item" src="" alt="Task Image">
+    </div>
+
+    <div id="game-grid"></div>
+
+    <button id="restart-btn" class="btn">Start Again</button>
+
+    <a href="index.html" class="back-link">← Back to Menu</a>
+
+    <!-- Оригінальний JS файл гри -->
+    <script src="game.js"></script>
+</body>
+
+</html>
