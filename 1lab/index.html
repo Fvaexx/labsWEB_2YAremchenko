@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота №1 | Веб-програмування</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #1e1e2f;
+            color: #e0e0e0;
+            padding: 2rem;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffb86c;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            border-bottom: 2px solid #44475a;
+            padding-bottom: 1rem;
+        }
+
+        .task-container {
+            background-color: #282a36;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid #44475a;
+        }
+
+        .task-container h3 {
+            color: #8be9fd;
+            margin-bottom: 0.5rem;
+        }
+
+        .task-desc {
+            font-size: 0.9rem;
+            color: #bfbfbf;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background-color: #bd93f9;
+            color: #282a36;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #ff79c6;
+        }
+
+        .output-box {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #191a21;
+            border-radius: 6px;
+            min-height: 40px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #50fa7b;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <h1>Лабораторна робота 1: Цикли та Умови JS</h1>
+
+        <section class="task-container">
+            <h3>Завдання 1: Прості числа (0 - 100)</h3>
+            <p class="task-desc">Пошук простих чисел за допомогою циклу <b>while</b>.</p>
+            <button id="btn-task-1">Знайти прості числа</button>
+            <div id="out-1" class="output-box">Очікування дії...</div>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 2: Парність чисел (0 - 10)</h3>
+            <p class="task-desc">Виведення результату за допомогою <b>do...while</b>.</p>
+            <button id="btn-task-2">Визначити парність</button>
+            <div id="out-2" class="output-box">Очікування дії...</div>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 3: Ділення числа 10000</h3>
+            <p class="task-desc">Ділення на 2, поки результат не стане менше 50. Вивід у консоль.</p>
+            <button id="btn-task-3">Почати ділення</button>
+            <div id="out-3" class="output-box">Очікування дії...</div>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 4: Пори року</h3>
+            <p class="task-desc">Визначення пори року та назви місяця (через prompt/alert).</p>
+            <button id="btn-task-4">Ввести номер місяця</button>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 5: Конвертер температур</h3>
+            <p class="task-desc">Переведення градусів Цельсія у Фаренгейти.</p>
+            <button id="btn-task-5">Ввести температуру (°C)</button>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 6: Дні тижня</h3>
+            <p class="task-desc">Виведення дня тижня на сторінку за його номером (1-7).</p>
+            <button id="btn-task-6">Ввести номер дня</button>
+            <div id="out-6" class="output-box">Очікування дії...</div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
