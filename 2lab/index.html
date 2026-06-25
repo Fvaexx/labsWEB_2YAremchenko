@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота №2 | Обробка подій JS</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: #1e1e2f;
+            color: #e0e0e0;
+            padding: 2rem;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffb86c;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            border-bottom: 2px solid #44475a;
+            padding-bottom: 1rem;
+        }
+
+        .task-container {
+            background-color: #282a36;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid #44475a;
+        }
+
+        .task-container h3 {
+            color: #8be9fd;
+            margin-bottom: 1rem;
+        }
+
+        /* Стилі для Завдання 1 */
+        .image-gallery {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .image-gallery img {
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 200px;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(139, 233, 253, 0.5);
+        }
+
+        /* Стилі для посилань */
+        .links-group a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #bd93f9;
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .links-group a:hover {
+            color: #ff79c6;
+        }
+
+        /* Стилі для інпутів */
+        input[type="text"] {
+            background-color: #1e1e2f;
+            border: 1px solid #6272a4;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 6px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #50fa7b;
+        }
+
+        /* Стилі для чисел */
+        .num-text {
+            background-color: #44475a;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .num-text:hover {
+            background-color: #6272a4;
+        }
+
+        /* Стилі для кубиків */
+        .boxes-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .color-box {
+            width: 80px;
+            height: 80px;
+            background-color: #6272a4;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .output-box {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #191a21;
+            border-radius: 6px;
+            min-height: 40px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #50fa7b;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <h1>Лабораторна робота 2: Обробка подій JS</h1>
+
+        <section class="task-container">
+            <h3>Завдання 1: Визначення ширини зображення при кліку</h3>
+            <div class="image-gallery">
+                <img src="https://picsum.photos/200/150?random=1" class="task-img" alt="img1">
+                <img src="https://picsum.photos/250/150?random=2" class="task-img" alt="img2">
+                <img src="https://picsum.photos/220/150?random=3" class="task-img" alt="img3">
+            </div>
+            <div id="out-1" class="output-box">Натисніть на будь-яке зображення...</div>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 2: Додавання title до посилань (одноразово)</h3>
+            <div class="links-group">
+                <a href="https://github.com" class="task-link">GitHub</a>
+                <a href="https://stackoverflow.com" class="task-link">StackOverflow</a>
+                <a href="https://uk.wikipedia.org" class="task-link">Wikipedia</a>
+            </div>
+            <div id="out-2" class="output-box">Наведіть мишкою на посилання (спрацює лише 1 раз для кожного).</div>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 3: Читання значення з поля вводу</h3>
+            <div>
+                <input type="text" class="input-t3" placeholder="Введіть щось...">
+                <input type="text" class="input-t3" placeholder="Ще текст...">
+            </div>
+            <div id="out-3" class="output-box">Клікніть по полю вводу після написання тексту.</div>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 4: Різна реакція на 1-й та 2-й клік</h3>
+            <div>
+                <input type="text" class="input-t4" placeholder="Введіть текст...">
+                <input type="text" class="input-t4" placeholder="Ще одне поле...">
+            </div>
+            <div id="out-4" class="output-box">Очікування кліку...</div>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 5: Розпізнавання чисел текстом і їх квадрат</h3>
+            <div class="num-text">двісті тридцять п'ять тисяч</div>
+            <div class="num-text">П'ятсот ДваНадцять</div>
+            <div class="num-text">25</div>
+        </section>
+
+        <section class="task-container">
+            <h3>Завдання 6: Зміна кольорів блоків</h3>
+            <div class="boxes-container">
+                <div class="color-box"></div>
+                <div class="color-box"></div>
+                <div class="color-box"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
