@@ -1,16 +1,13 @@
 const categories = ['animals', 'insects', 'fish'];
-// Залишаємо масив розширень для збереження оригінальної структури
 const extensions = ['jpg', 'png', 'jpeg', 'webp', 'avif'];
 let score = 0;
 let targetData = { id: 0, cat: '' };
 
-// ОНОВЛЕНО: Тепер беремо картинки з інтернету!
-// Використання seed гарантує, що для однакових id та cat картинка завжди буде ідентичною.
+
 function getImgPath(cat, id, ext = 'jpg') {
     return `https://picsum.photos/seed/${cat}_${id}/150/150`;
 }
 
-// ОНОВЛЕНО: Покращений обробник помилок завантаження картинок
 function fixImgErrors(imgElement, cat, id) {
     imgElement.off('error').on('error', function () {
         let currentSrc = $(this).attr('src');
@@ -19,7 +16,7 @@ function fixImgErrors(imgElement, cat, id) {
         if (!currentSrc.includes('retry')) {
             $(this).attr('src', getImgPath(cat, id) + "?retry=1");
         } else {
-            // Якщо і це не допомогло, ставимо надійну кольорову заглушку
+        
             $(this).attr('src', `https://via.placeholder.com/150/1e1e1e/4caf50?text=${cat}+${id}`);
         }
     });
